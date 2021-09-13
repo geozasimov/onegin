@@ -38,3 +38,4 @@ int StrLen(char* str)
 	}
 	return n;
 }
+//jhg
