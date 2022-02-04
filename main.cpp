@@ -1,41 +1,55 @@
-#include <stdio.h>
+#include "onegin.h"
 
-int main()
+
+int main(int argc, char* argv[]) 
 {
-	///smth
+	Text text;
+
+	SayGreetings();
+
+	if (GetFileNames(&text, argc, argv) == 0)
+	{
+		printf("\nCorrect names of files!\n");
+	}
+	else
+	{
+		printf("\nIncorrect names of files! Please restart programm again!\n");
+		return 1;
+	}
+
+	if (ReadFromFile(&text) == WRONG_INPUT_FILE)
+	{
+		printf("\nIncorrect names of files! Please restart programm again!\n");
+		return 1;
+	}
+	else
+	{
+		printf("\nThe text has been read!\n");
+	}
+
+	MakeString(&text);
+
+	FILE *output_file = OpenFileWrite(&text);
+
+	if (!output_file)
+	{
+		printf("Output file ERROR\n");
+		return 1;
+	}
+
+	Sort(&text);
+	WriteToFile(&text, output_file);
+
+	CloseFile(output_file);
+
+	MemoryFree(&text);
+
+	SayGoodbye(); 
+
 	return 0;
 }
-int Puts(char* str)
-{
-	int i;
 
-	for (i = 0; str[i] != '\0'; i++)
-	{
-		putchar(str[i]);
-	}
-	printf("\n");
 
-	return 0;
-	}
 
-char* StrChr(char *str, int c)
-{
-	while(*str != '\0')
-	{
-		if (*str == 'c')
-		return str;
-	}
-	return NULL;
-	}
 
-int StrLen(char* str)
-{
-	int i;
-	int n = 0;
-	for (i = 0; str[i] != '\0'; i++)
-	{
-		n++;
-	}
-	return n;
-}
-//jhg
+
